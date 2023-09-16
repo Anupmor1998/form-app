@@ -1,57 +1,11 @@
-import { useEffect, useRef, useState } from 'react';
+/* eslint-disable react/prop-types */
 import { countryList } from '../../data/courtry';
 
-const Form = () => {
-  const [formValues, setFormValues] = useState({
-    companyName: '',
-    address: '',
-    country: '',
-    orderNo: '',
-    status: true,
-  });
-
-  const formRef = useRef(null);
-
-  //   console.log(formValues, 'formValues');
-
-  const handleChange = (e) => {
-    let { name, value } = e.target;
-
-    if (name === 'orderNo' && isNaN(value)) return;
-
-    if (name === 'status') {
-      setFormValues((prevState) => ({
-        ...prevState,
-        [name]: !prevState.status,
-      }));
-      return;
-    }
-
-    setFormValues((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const handleKeyPress = (e, fieldName, type = 'input') => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      const parentElement = formRef.current;
-      const nextInput = parentElement.querySelector(`${type}#${fieldName}`);
-      if (nextInput) {
-        nextInput.focus();
-      }
-    }
-  };
-
-  useEffect(() => {
-    formRef.current.parentElement.querySelector(`input#companyName`).focus();
-  }, []);
-
+const Form = ({ formValues, handleChange, handleKeyPress }) => {
   return (
     <div className='w-full h-auto px-4'>
       <h1 className='text-black text-xl font-bold'>Basic Info Form</h1>
-      <div ref={formRef} className='mt-10 grid grid-cols-12 gap-4 h-full'>
+      <div className='mt-10 grid grid-cols-12 gap-4 h-full py-2'>
         <div className='w-full col-span-4 flex flex-col justify-start items-start'>
           <label
             className='text-sm text-gray-500 font-semibold'
@@ -81,7 +35,7 @@ const Form = () => {
             id='orderNo'
             value={formValues.orderNo || ''}
             onChange={handleChange}
-            onKeyDown={(e) => handleKeyPress(e, 'country', 'select')}
+            onKeyDown={(e) => handleKeyPress(e, 'country')}
           />
         </div>
         <div className='w-full col-span-4 flex flex-col justify-start items-start'>
@@ -96,7 +50,7 @@ const Form = () => {
             id='country'
             value={formValues.country || ''}
             onChange={handleChange}
-            onKeyDown={(e) => handleKeyPress(e, 'address', 'textarea')}>
+            onKeyDown={(e) => handleKeyPress(e, 'address')}>
             <option value='' disabled>
               Select Country
             </option>
@@ -135,6 +89,7 @@ const Form = () => {
               name='status'
               //   value={formValues.status}
               onChange={handleChange}
+              onKeyDown={(e) => handleKeyPress(e, 'socialMediaName', 0)}
             />
             <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
             <span className='ml-3 text-sm font-medium text-gray-900'>
