@@ -17,7 +17,7 @@ const Table = ({
       </div>
       <div className='w-full overflow-auto h-auto scrollbar-thin scrollbar-thumb-primary-600 scrollbar-track-slate-400'>
         <table className='w-full text-sm text-left text-gray-500'>
-          <thead className='sticky top-0 text-xs text-gray-700 uppercase bg-gray-50 '>
+          <thead className='sticky top-0 text-xs text-gray-700 uppercase bg-gray-200'>
             <tr className='bg-primary-50'>
               {columns?.map((column) => (
                 <th key={column?.id} scope='col' className='px-4 py-3'>
