@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
-import { SOCIAL_MEDIAS } from '../../utils/columns';
+import { SOCIAL_MEDIAS } from '../../data';
 
-const SocialMediaTable = ({
+const SocialMediaGrid = ({
   rows,
   handleChange,
   handleKeyPress,
@@ -69,4 +69,4 @@ const SocialMediaTable = ({
   );
 };
 
-export default SocialMediaTable;
+export default SocialMediaGrid;
