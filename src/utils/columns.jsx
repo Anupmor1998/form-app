@@ -4,54 +4,10 @@ export const TABLE_1_COLUMNS = [
   {
     id: 'socialMediaName',
     label: 'Social Media',
-    ele: (index, row, rows, handleChange, handleKeyPress) => (
-      <select
-        name='socialMediaName'
-        id={`socialMediaName${index}`}
-        className='text-sm mt-2 text-gray-500 rounded-md bg-gray-200 font-semibold w-full px-3 py-2.5 outline-none border-none focus:ring-2 focus:ring-blue-300'
-        value={row?.socialMediaName || ''}
-        onChange={(e) => handleChange(e, index, 'tab-1')}
-        onKeyDown={(e) => handleKeyPress(e, 'description', index)}>
-        <option value='' disabled>
-          Select Social Media
-        </option>
-        {SOCIAL_MEDIAS.map((option) => (
-          <option key={option.id}>{option.name}</option>
-        ))}
-      </select>
-    ),
   },
   {
     id: 'description',
     label: 'Description',
-    ele: (
-      index,
-      row,
-      rows,
-      handleChange,
-      handleKeyPress,
-      addNewRow,
-      deleteRow
-    ) => (
-      <input
-        type='text'
-        name='description'
-        id={`description${index}`}
-        className='text-sm mt-2 text-gray-500 rounded-md bg-gray-200 font-semibold w-full px-3 py-2.5 outline-none border-none focus:ring-2 focus:ring-blue-300'
-        value={row.description || ''}
-        onChange={(e) => handleChange(e, index, 'tab-1')}
-        onKeyDown={(e) => {
-          if (rows[index + 1]) handleKeyPress(e, 'socialMediaName', index + 1);
-          else {
-            handleKeyPress(e, 'documentName', 0);
-          }
-
-          if (rows.length > 1) deleteRow(e, row.id, 'tab-1');
-
-          addNewRow(e, 'tab-1');
-        }}
-      />
-    ),
   },
 ];
 
