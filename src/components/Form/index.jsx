@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { countryList } from '../../data/courtry';
+import { countryList } from '../../data';
 
 const Form = ({ formValues, handleChange, handleKeyPress }) => {
   return (

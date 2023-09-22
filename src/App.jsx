@@ -1,7 +1,7 @@
+import DetailsGrid from './components/DetailsGrid';
 import Form from './components/Form';
-import Table from './components/Table';
+import SocialMediaGrid from './components/SocialMediaGrid';
 import { useForm } from './hooks/useForm';
-import { TABLE_1_COLUMNS, TABLE_2_COLUMNS } from './utils/columns';
 
 function App() {
   const {
@@ -23,23 +23,20 @@ function App() {
         handleKeyPress={handleKeyPress}
         formValues={formValues}
       />
-      <Table
-        columns={TABLE_1_COLUMNS}
+      <SocialMediaGrid
         rows={tab1Values}
         handleChange={handleChangeTab}
         handleKeyPress={handleKeyPress}
         addNewRow={addNewRow}
         deleteRow={deleteRow}
-        title={'Tab 1'}
       />
-      <Table
-        columns={TABLE_2_COLUMNS}
+
+      <DetailsGrid
         rows={tab2Values}
         handleChange={handleChangeTab}
         handleKeyPress={handleKeyPress}
         addNewRow={addNewRow}
         deleteRow={deleteRow}
-        title={'Tab 2'}
       />
       <div className='w-full flex justify-center items-center my-4'>
         <button

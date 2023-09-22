@@ -249,3 +249,50 @@ export const countryList = [
   'Zimbabwe',
   'Åland Islands',
 ];
+
+export const SOCIAL_MEDIAS = [
+  {
+    id: 'whatsapp',
+    name: 'WhatsApp',
+  },
+  {
+    id: 'instagram',
+    name: 'Intagram',
+  },
+  {
+    id: 'linkedIn',
+    name: 'LinkedIn',
+  },
+  {
+    id: 'facebook',
+    name: 'Facebook',
+  },
+];
+export const DOCUMENTS = [
+  {
+    id: 'resume',
+    name: 'Resume',
+  },
+  {
+    id: 'bankStatement',
+    name: 'Bank Statement',
+  },
+  {
+    id: 'address Proof',
+    name: 'Address Proof',
+  },
+  {
+    id: 'offerLetter',
+    name: 'Offer Letter',
+  },
+];
+
+export const PROCESSES = [
+  { value: 'react', label: 'React' },
+  { value: 'ng', label: 'Angular' },
+  { value: 'svelte', label: 'Svelte' },
+  { value: 'vue', label: 'Vue' },
+  { value: 'riot', label: 'Riot' },
+  { value: 'next', label: 'Next.js' },
+  { value: 'blitz', label: 'Blitz.js' },
+];
