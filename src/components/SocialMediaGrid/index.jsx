@@ -1,5 +1,6 @@
 import { Fragment } from 'react';
 import { SOCIAL_MEDIAS } from '../../data';
+import { Grid } from '@mui/material';
 
 const SocialMediaGrid = ({
   rows,
@@ -9,23 +10,27 @@ const SocialMediaGrid = ({
   deleteRow,
 }) => {
   return (
-    <div className='w-full mt-6 h-auto px-4 shadow-md'>
-      <div className='grid h-auto grid-cols-2 bg-gray-300'>
-        <div className='w-full py-2'>
-          <h1 className='text-base font-bold text-black capitalize text-left px-4'>
-            Social Media
-          </h1>
-        </div>
-        <div className='w-full py-2'>
-          <h1 className='text-base font-bold text-black capitalize text-left px-4'>
-            Description
-          </h1>
-        </div>
-      </div>
-      <div className='grid h-auto grid-cols-2 gap-4 py-4'>
+    <>
+      <Grid container marginTop={6}>
+        <Grid item xs={6}>
+          <div className='w-full py-2 bg-gray-300'>
+            <h1 className='text-base font-bold text-black capitalize text-left'>
+              Social Media
+            </h1>
+          </div>
+        </Grid>
+        <Grid item xs={6}>
+          <div className='w-full py-2 bg-gray-300'>
+            <h1 className='text-base font-bold text-black capitalize text-left'>
+              Description
+            </h1>
+          </div>
+        </Grid>
+      </Grid>
+      <Grid container marginTop={0.2} spacing={2}>
         {rows?.map((row, index) => (
           <Fragment key={row?.id}>
-            <div className='w-full'>
+            <Grid item xs={6}>
               <select
                 name='socialMediaName'
                 id={`socialMediaName${index}`}
@@ -40,8 +45,8 @@ const SocialMediaGrid = ({
                   <option key={option.id}>{option.name}</option>
                 ))}
               </select>
-            </div>
-            <div className='w-full'>
+            </Grid>
+            <Grid item xs={6}>
               <input
                 type='text'
                 name='description'
@@ -61,11 +66,11 @@ const SocialMediaGrid = ({
                   addNewRow(e, 'tab-1');
                 }}
               />
-            </div>
+            </Grid>
           </Fragment>
         ))}
-      </div>
-    </div>
+      </Grid>
+    </>
   );
 };
 

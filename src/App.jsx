@@ -17,7 +17,7 @@ function App() {
     deleteRow,
   } = useForm();
   return (
-    <div>
+    <div className='w-full p-4'>
       <Form
         handleChange={handleChangeForm}
         handleKeyPress={handleKeyPress}

@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
+import { Grid } from '@mui/material';
 import { countryList } from '../../data';
 
 const Form = ({ formValues, handleChange, handleKeyPress }) => {
   return (
-    <div className='w-full h-auto px-4'>
-      <h1 className='text-black text-xl font-bold'>Basic Info Form</h1>
-      <div className='mt-10 grid grid-cols-12 gap-4 h-full py-2'>
-        <div className='w-full col-span-4 flex flex-col justify-start items-start'>
+    <Grid container spacing={2}>
+      <Grid item xs={4}>
+        <div className='w-full flex flex-col justify-start items-start'>
           <label
             className='text-sm text-gray-500 font-semibold'
             htmlFor='companyName'>
@@ -22,7 +22,9 @@ const Form = ({ formValues, handleChange, handleKeyPress }) => {
             onKeyDown={(e) => handleKeyPress(e, 'orderNo')}
           />
         </div>
-        <div className='w-full col-span-4 flex flex-col justify-start items-start'>
+      </Grid>
+      <Grid item xs={4}>
+        <div className='w-full flex flex-col justify-start items-start'>
           <label
             className='text-sm text-gray-500 font-semibold'
             htmlFor='orderNo'>
@@ -38,7 +40,9 @@ const Form = ({ formValues, handleChange, handleKeyPress }) => {
             onKeyDown={(e) => handleKeyPress(e, 'country')}
           />
         </div>
-        <div className='w-full col-span-4 flex flex-col justify-start items-start'>
+      </Grid>
+      <Grid item xs={4}>
+        <div className='w-full flex flex-col justify-start items-start'>
           <label
             className='text-sm text-gray-500 font-semibold'
             htmlFor='country'>
@@ -61,7 +65,9 @@ const Form = ({ formValues, handleChange, handleKeyPress }) => {
             ))}
           </select>
         </div>
-        <div className='w-full col-span-6 flex flex-col justify-start items-start'>
+      </Grid>
+      <Grid item xs={4}>
+        <div className='w-full flex flex-col justify-start items-start'>
           <label
             className='text-sm text-gray-500 font-semibold'
             htmlFor='address'>
@@ -76,7 +82,9 @@ const Form = ({ formValues, handleChange, handleKeyPress }) => {
             onKeyDown={(e) => handleKeyPress(e, 'status')}
           />
         </div>
-        <div className='w-full col-span-6 flex flex-col justify-start items-start'>
+      </Grid>
+      <Grid item xs={4}>
+        <div className='w-full flex flex-col justify-start items-start'>
           <p className='text-sm text-gray-500 font-semibold' htmlFor='address'>
             Status:
           </p>
@@ -97,8 +105,8 @@ const Form = ({ formValues, handleChange, handleKeyPress }) => {
             </span>
           </label>
         </div>
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   );
 };
 
