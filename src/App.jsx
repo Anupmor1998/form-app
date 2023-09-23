@@ -1,3 +1,4 @@
+import { Grid } from '@mui/material';
 import DetailsGrid from './components/DetailsGrid';
 import Form from './components/Form';
 import SocialMediaGrid from './components/SocialMediaGrid';
@@ -17,7 +18,7 @@ function App() {
     deleteRow,
   } = useForm();
   return (
-    <div className='w-full p-4'>
+    <Grid container padding={2}>
       <Form
         handleChange={handleChangeForm}
         handleKeyPress={handleKeyPress}
@@ -38,7 +39,7 @@ function App() {
         addNewRow={addNewRow}
         deleteRow={deleteRow}
       />
-      <div className='w-full flex justify-center items-center my-4'>
+      <Grid item display='flex' justifyContent='center' marginTop={4} xs={12}>
         <button
           className='w-auto px-7 py-2.5 text-white font-semibold bg-blue-600 outline-none border transition-all duration-500 ease-in-out border-transparent rounded-md focus:ring-2 focus:ring-blue-300 enabled:hover:text-blue-600 enabled:hover:bg-white enabled:hover:border-blue-600 disabled:cursor-not-allowed disabled:bg-opacity-60'
           id='submit-btn'
@@ -47,8 +48,8 @@ function App() {
           onClick={handleSubmit}>
           {loading ? 'Submitting...' : 'Submit'}
         </button>
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   );
 }
 
