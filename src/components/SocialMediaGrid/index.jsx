@@ -10,8 +10,8 @@ const SocialMediaGrid = ({
   deleteRow,
 }) => {
   return (
-    <>
-      <Grid container marginTop={6}>
+    <Grid container marginTop={6}>
+      <Grid container item>
         <Grid item xs={6}>
           <div className='w-full py-2 bg-gray-300'>
             <h1 className='text-base font-bold text-black capitalize text-left'>
@@ -27,7 +27,7 @@ const SocialMediaGrid = ({
           </div>
         </Grid>
       </Grid>
-      <Grid container marginTop={0.2} spacing={2}>
+      <Grid container item marginTop={0.2} spacing={2}>
         {rows?.map((row, index) => (
           <Fragment key={row?.id}>
             <Grid item xs={6}>
@@ -70,7 +70,7 @@ const SocialMediaGrid = ({
           </Fragment>
         ))}
       </Grid>
-    </>
+    </Grid>
   );
 };
 
