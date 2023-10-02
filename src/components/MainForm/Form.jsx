@@ -1,8 +1,14 @@
 /* eslint-disable react/prop-types */
 import { Grid } from '@mui/material';
 import { countryList } from '../../data';
+import { useRef } from 'react';
 
 const Form = ({ formValues, handleChange, handleKeyPress }) => {
+  const imgRef = useRef(null);
+
+  const onBrowse = () => {
+    imgRef.current.click();
+  };
   return (
     <Grid container spacing={2}>
       <Grid item xs={4}>
@@ -104,6 +110,35 @@ const Form = ({ formValues, handleChange, handleKeyPress }) => {
               {formValues.status ? 'Active' : 'Disabled'}
             </span>
           </label>
+        </div>
+      </Grid>
+      <Grid item xs={4}>
+        <div className='w-full flex flex-col justify-start items-start'>
+          <label
+            className='text-sm text-gray-500 font-semibold'
+            htmlFor='address'>
+            Image:
+          </label>
+          <input
+            hidden
+            type='file'
+            accept={'image/*'}
+            ref={imgRef}
+            name='image'
+            onChange={handleChange}
+          />
+          {formValues?.image && (
+            <span className='text-sm mr-2 mt-2 text-gray-500'>
+              {formValues?.image?.name}
+            </span>
+          )}
+          <button
+            className='w-auto px-3 mt-2 py-1.5 text-white font-semibold bg-blue-600 outline-none border transition-all duration-500 ease-in-out border-transparent rounded-md focus:ring-2 focus:ring-blue-300 enabled:hover:text-blue-600 enabled:hover:bg-white enabled:hover:border-blue-600 disabled:cursor-not-allowed disabled:bg-opacity-60'
+            id='browse-btn'
+            type='button'
+            onClick={onBrowse}>
+            Browse
+          </button>
         </div>
       </Grid>
     </Grid>

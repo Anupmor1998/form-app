@@ -32,11 +32,15 @@ export const useForm = () => {
     country: '',
     orderNo: '',
     status: true,
+    image: null,
   });
 
   const handleChangeForm = (e) => {
-    let { name, value } = e.target;
+    let { name, value, files } = e.target;
 
+    if (name === 'image') {
+      value = files[0];
+    }
     if (name === 'orderNo' && isNaN(value)) return;
 
     if (name === 'status') {
