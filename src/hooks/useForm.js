@@ -68,10 +68,10 @@ export const useForm = () => {
     setTabs((prev) => prev.filter((ele) => ele.id !== id));
 
     setActiveIndex((prev) => {
-      // console.log('prev', prev);
-      if (prev > 0) {
-        return prev - 1;
-      }
+      if (prev > 1) return prev - 1;
+
+      if (tabs.length > 0 && prev < tabs.length) return prev;
+
       return 0;
     });
   };
