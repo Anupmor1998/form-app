@@ -9,33 +9,74 @@ export const useForm = () => {
     delete: false,
     type: '',
   });
-  const [tab1Values, setTab1Values] = useState([
-    {
-      id: uuid(),
-      socialMediaName: '',
-      description: '',
-    },
-  ]);
-  const [tab2Values, setTab2Values] = useState([
-    {
-      id: uuid(),
-      documentName: '',
-      startDate: '',
-      gender: 'male',
-      process: [],
-    },
-  ]);
 
-  const [formValues, setFormValues] = useState({
-    companyName: '',
-    address: '',
-    country: '',
-    orderNo: '',
-    status: true,
-    image: null,
-  });
+  const [tabs, setTabs] = useState([]);
 
-  const handleChangeForm = (e) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const handleActiveIndex = (newIndex) => {
+    setActiveIndex(newIndex);
+  };
+
+  const addNewTab = () => {
+    setTabs((prev) => {
+      if (prev?.length < 3) {
+        return [
+          ...prev,
+          {
+            id: uuid(),
+            // lastFocusedField: `#companyName-${prev.length}`,
+            formValues: {
+              companyName: '',
+              address: '',
+              country: '',
+              orderNo: '',
+              status: true,
+              image: null,
+            },
+            tab1Values: [
+              {
+                id: uuid(),
+                socialMediaName: '',
+                description: '',
+              },
+            ],
+            tab2Values: [
+              {
+                id: uuid(),
+                documentName: '',
+                startDate: '',
+                gender: 'male',
+                process: [],
+              },
+            ],
+          },
+        ];
+      }
+      return prev;
+    });
+
+    setActiveIndex((prev) => {
+      if (prev) {
+        return prev + 1;
+      }
+      return 1;
+    });
+  };
+
+  const deleteTab = (id) => {
+    setTabs((prev) => prev.filter((ele) => ele.id !== id));
+
+    setActiveIndex((prev) => {
+      // console.log('prev', prev);
+      if (prev > 0) {
+        return prev - 1;
+      }
+      return 0;
+    });
+  };
+
+  const handleChangeForm = (e, index) => {
     let { name, value, files } = e.target;
 
     if (name === 'image') {
@@ -43,94 +84,93 @@ export const useForm = () => {
     }
     if (name === 'orderNo' && isNaN(value)) return;
 
-    if (name === 'status') {
-      setFormValues((prevState) => ({
-        ...prevState,
-        [name]: !prevState.status,
-      }));
-      return;
-    }
-
-    setFormValues((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
+    setTabs((prev) => {
+      const data = [...prev];
+      if (name === 'status') {
+        data[index]['formValues'][name] = !data[index]['formValues'][name];
+      } else {
+        data[index]['formValues'][name] = value;
+      }
+      return data;
+    });
   };
 
-  const handleKeyPress = (e, fieldName, index = null) => {
+  const handleKeyPress = (e, fieldName) => {
     if (e.key === 'Enter') {
       e.preventDefault();
-      const nextInput =
-        index !== null
-          ? document.querySelector(`#${fieldName}${index}`)
-          : document.querySelector(`#${fieldName}`);
+      const nextInput = document.querySelector(`#${fieldName}`);
       if (nextInput) {
         nextInput.focus();
       }
     }
   };
 
-  const handleChangeTab = (e, index, type) => {
+  const handleChangeTab = (e, tabIndex, index, type) => {
     setRowStatus({
       delete: false,
       add: false,
       type: '',
     });
     if (type.includes('multi-select')) {
-      setTab2Values((prevState) => {
-        const data = [...prevState];
-        if (data[index] && data[index]['process'] !== undefined)
-          data[index]['process'] = e;
+      // setTab2Values((prevState) => {
+      //   const data = [...prevState];
+      //   if (data[index] && data[index]['process'] !== undefined)
+      //     data[index]['process'] = e;
+
+      //   return data;
+      // });
+
+      setTabs((prev) => {
+        const data = [...prev];
+        if (
+          data[tabIndex]['tab2Values'][index] &&
+          data[tabIndex]['tab2Values'][index]['process'] !== undefined
+        )
+          data[tabIndex]['tab2Values'][index]['process'] = e;
 
         return data;
       });
     } else {
       const { name, value } = e.target;
 
-      type === 'tab-1' &&
-        setTab1Values((prevState) => {
-          const data = [...prevState];
-          data[index][name] = value;
+      setTabs((prev) => {
+        const data = [...prev];
+        const field = type === 'tab-1' ? 'tab1Values' : 'tab2Values';
+        if (name.includes('gender')) {
+          data[tabIndex][field][index].gender = value;
+        } else {
+          data[tabIndex][field][index][name] = value;
+        }
 
-          return data;
-        });
-
-      type === 'tab-2' &&
-        setTab2Values((prevState) => {
-          const data = [...prevState];
-          if (name.includes('gender')) {
-            data[index].gender = value;
-          } else {
-            data[index][name] = value;
-          }
-          return data;
-        });
+        return data;
+      });
     }
   };
 
-  const addNewRow = (e, type) => {
+  const addNewRow = (e, index, type) => {
     if (e.key === 'Insert') {
-      type === 'tab-1' &&
-        setTab1Values((prevState) => [
-          ...prevState,
-          {
-            id: uuid(),
-            socialMediaName: '',
-            description: '',
-          },
-        ]);
+      setTabs((prev) => {
+        const data = [...prev];
+        const field = type === 'tab-1' ? 'tab1Values' : 'tab2Values';
 
-      type === 'tab-2' &&
-        setTab2Values((prevState) => [
-          ...prevState,
-          {
-            id: uuid(),
-            documentName: '',
-            startDate: '',
-            gender: 'male',
-            process: [],
-          },
-        ]);
+        data[index][field] = [
+          ...data[index][field],
+          type === 'tab1'
+            ? {
+                id: uuid(),
+                socialMediaName: '',
+                description: '',
+              }
+            : {
+                id: uuid(),
+                documentName: '',
+                startDate: '',
+                gender: 'male',
+                process: [],
+              },
+        ];
+        return data;
+      });
 
       setRowStatus({
         delete: false,
@@ -140,13 +180,16 @@ export const useForm = () => {
     }
   };
 
-  const deleteRow = (e, id, type) => {
+  const deleteRow = (e, index, id, type) => {
     if (e.key === 'Delete') {
-      type === 'tab-1' &&
-        setTab1Values((prevState) => prevState.filter((ele) => ele.id !== id));
+      setTabs((prev) => {
+        const data = [...prev];
+        const field = type === 'tab-1' ? 'tab1Values' : 'tab2Values';
 
-      type === 'tab-2' &&
-        setTab2Values((prevState) => prevState.filter((ele) => ele.id !== id));
+        data[index][field] = data[index][field]?.filter((ele) => ele.id !== id);
+
+        return data;
+      });
 
       setRowStatus({
         delete: true,
@@ -156,13 +199,11 @@ export const useForm = () => {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (index) => {
     try {
       setLoading(true);
       const data = {
-        form: formValues,
-        table1: tab1Values,
-        table2: tab2Values,
+        data: tabs[index],
       };
 
       const res = await axios.post('https://demo-url', data);
@@ -175,38 +216,60 @@ export const useForm = () => {
   };
 
   useEffect(() => {
-    if (document) document.querySelector(`#companyName`).focus();
-  }, []);
+    if (document) {
+      document.querySelector(`#companyName-${[activeIndex - 1]}`)?.focus();
+    }
+  }, [activeIndex]);
 
   useEffect(() => {
-    if (document) {
+    if (document && activeIndex > 0) {
       if (rowStatus.add) {
         rowStatus.type === 'tab-1' &&
           document
-            .querySelector(`#socialMediaName${tab1Values.length - 1}`)
+            .querySelector(
+              `#socialMediaName-${activeIndex - 1}-${
+                tabs[activeIndex - 1]?.tab1Values?.length - 1
+              }`
+            )
             .focus();
         rowStatus.type === 'tab-2' &&
           document
-            .querySelector(`#documentName${tab2Values.length - 1}`)
+            .querySelector(
+              `#documentName-${activeIndex - 1}-${
+                tabs[activeIndex - 1]?.tab2Values?.length - 1
+              }`
+            )
             .focus();
       }
 
       if (rowStatus.delete) {
         rowStatus.type === 'tab-1' &&
           document
-            .querySelector(`#description${tab1Values.length - 1}`)
+            .querySelector(
+              `#description-${activeIndex - 1}-${
+                tabs[activeIndex - 1]?.tab1Values?.length - 1
+              }`
+            )
             .focus();
         rowStatus.type === 'tab-2' &&
-          document.querySelector(`#process${tab2Values.length - 1}`).focus();
+          document
+            .querySelector(
+              `#process-${activeIndex - 1}-${
+                tabs[activeIndex - 1]?.tab2Values?.length - 1
+              }`
+            )
+            .focus();
       }
     }
-  }, [rowStatus, tab1Values, tab2Values]);
+  }, [rowStatus, tabs, activeIndex]);
 
   return {
-    formValues,
-    tab1Values,
-    tab2Values,
     loading,
+    tabs,
+    activeIndex,
+    handleActiveIndex,
+    addNewTab,
+    deleteTab,
     handleChangeForm,
     handleChangeTab,
     addNewRow,

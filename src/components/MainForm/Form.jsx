@@ -3,7 +3,7 @@ import { Grid } from '@mui/material';
 import { countryList } from '../../data';
 import { useRef } from 'react';
 
-const Form = ({ formValues, handleChange, handleKeyPress }) => {
+const Form = ({ formValues, handleChange, handleKeyPress, index }) => {
   const imgRef = useRef(null);
 
   const onBrowse = () => {
@@ -22,10 +22,10 @@ const Form = ({ formValues, handleChange, handleKeyPress }) => {
             className='text-sm mt-2 text-gray-500 rounded-md bg-gray-200 font-semibold w-full px-3 py-2.5 outline-none border-none focus:ring-2 focus:ring-blue-300'
             type='text'
             name='companyName'
-            id='companyName'
-            value={formValues.companyName || ''}
-            onChange={handleChange}
-            onKeyDown={(e) => handleKeyPress(e, 'orderNo')}
+            id={`companyName-${index}`}
+            value={formValues?.companyName || ''}
+            onChange={(e) => handleChange(e, index)}
+            onKeyDown={(e) => handleKeyPress(e, `orderNo-${index}`)}
           />
         </div>
       </Grid>
@@ -40,10 +40,10 @@ const Form = ({ formValues, handleChange, handleKeyPress }) => {
             className='text-sm mt-2 text-gray-500 rounded-md bg-gray-200 font-semibold w-full px-3 py-2.5 outline-none border-none focus:ring-2 focus:ring-blue-300'
             type='text'
             name='orderNo'
-            id='orderNo'
-            value={formValues.orderNo || ''}
-            onChange={handleChange}
-            onKeyDown={(e) => handleKeyPress(e, 'country')}
+            id={`orderNo-${index}`}
+            value={formValues?.orderNo || ''}
+            onChange={(e) => handleChange(e, index)}
+            onKeyDown={(e) => handleKeyPress(e, `country-${index}`)}
           />
         </div>
       </Grid>
@@ -57,10 +57,10 @@ const Form = ({ formValues, handleChange, handleKeyPress }) => {
           <select
             className='text-sm mt-2 text-gray-500 rounded-md bg-gray-200 font-semibold w-full px-3 py-2.5 outline-none border-none focus:ring-2 focus:ring-blue-300'
             name='country'
-            id='country'
-            value={formValues.country || ''}
-            onChange={handleChange}
-            onKeyDown={(e) => handleKeyPress(e, 'address')}>
+            id={`country-${index}`}
+            value={formValues?.country || ''}
+            onChange={(e) => handleChange(e, index)}
+            onKeyDown={(e) => handleKeyPress(e, `address-${index}`)}>
             <option value='' disabled>
               Select Country
             </option>
@@ -82,10 +82,10 @@ const Form = ({ formValues, handleChange, handleKeyPress }) => {
           <textarea
             className='text-sm mt-2 resize-none min-h-[6rem] text-gray-500 rounded-md bg-gray-200 font-semibold w-full px-3 py-2.5 outline-none border-none focus:ring-2 focus:ring-blue-300'
             name='address'
-            id='address'
-            value={formValues.address || ''}
-            onChange={handleChange}
-            onKeyDown={(e) => handleKeyPress(e, 'status')}
+            id={`address-${index}`}
+            value={formValues?.address || ''}
+            onChange={(e) => handleChange(e, index)}
+            onKeyDown={(e) => handleKeyPress(e, `status-${index}`)}
           />
         </div>
       </Grid>
@@ -98,16 +98,16 @@ const Form = ({ formValues, handleChange, handleKeyPress }) => {
             <input
               type='checkbox'
               className='sr-only peer'
-              checked={formValues.status}
-              id='status'
+              checked={formValues?.status}
+              id={`status-${index}`}
               name='status'
-              //   value={formValues.status}
-              onChange={handleChange}
-              onKeyDown={(e) => handleKeyPress(e, 'socialMediaName', 0)}
+              //   value={formValues?.status}
+              onChange={(e) => handleChange(e, index)}
+              onKeyDown={(e) => handleKeyPress(e, `browse-btn-${index}`)}
             />
             <div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-blue-600"></div>
             <span className='ml-3 text-sm font-medium text-gray-900'>
-              {formValues.status ? 'Active' : 'Disabled'}
+              {formValues?.status ? 'Active' : 'Disabled'}
             </span>
           </label>
         </div>
@@ -125,7 +125,7 @@ const Form = ({ formValues, handleChange, handleKeyPress }) => {
             accept={'image/*'}
             ref={imgRef}
             name='image'
-            onChange={handleChange}
+            onChange={(e) => handleChange(e, index)}
           />
           {formValues?.image && (
             <span className='text-sm mr-2 mt-2 text-gray-500'>
@@ -134,9 +134,12 @@ const Form = ({ formValues, handleChange, handleKeyPress }) => {
           )}
           <button
             className='w-auto px-3 mt-2 py-1.5 text-white font-semibold bg-blue-600 outline-none border transition-all duration-500 ease-in-out border-transparent rounded-md focus:ring-2 focus:ring-blue-300 enabled:hover:text-blue-600 enabled:hover:bg-white enabled:hover:border-blue-600 disabled:cursor-not-allowed disabled:bg-opacity-60'
-            id='browse-btn'
+            id={`browse-btn-${index}`}
             type='button'
-            onClick={onBrowse}>
+            onClick={onBrowse}
+            onKeyDown={(e) =>
+              handleKeyPress(e, `socialMediaName-${index}-${0}`)
+            }>
             Browse
           </button>
         </div>
